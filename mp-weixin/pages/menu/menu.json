@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "菜单列表",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "u-swiper": "/node-modules/uview-ui/components/u-swiper/u-swiper",
+    "u-transition": "/node-modules/uview-ui/components/u-transition/u-transition",
+    "u-scroll-list": "/node-modules/uview-ui/components/u-scroll-list/u-scroll-list",
+    "type-pick": "/components/TypePick"
+  }
+}

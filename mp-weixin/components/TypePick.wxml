@@ -1,0 +1,1 @@
+<view><u-picker vue-id="237e7b20-1" show="{{show}}" columns="{{flavorList}}" keyName="name" defaultIndex="0" data-event-opts="{{[['^confirm',[['ok']]],['^cancel',[['cancel']]],['^change',[['changeFlavor']]]]}}" bind:confirm="__e" bind:cancel="__e" bind:change="__e" bind:__l="__l"></u-picker></view>

@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "热门推荐",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-subsection": "/node-modules/uview-ui/components/u-subsection/u-subsection",
+    "u-empty": "/node-modules/uview-ui/components/u-empty/u-empty",
+    "guess-like": "/components/GuessLike",
+    "hot-like": "/components/HotDish"
+  }
+}
