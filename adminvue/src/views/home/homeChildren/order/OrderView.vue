@@ -107,6 +107,10 @@ onMounted(() => {
   if (myAudio.value != null) {
     myAudio.value.src = require('@/assets/newOrder.mp3')
     myAudio.value.controls = true
+    // 添加音频播放结束事件监听
+    myAudio.value.onended = () => {
+      audioPlay.value = false
+    }
   }
 
   getOrder()
@@ -114,7 +118,7 @@ onMounted(() => {
   hasNewOrder()
   setInterval(() => {
     hasNewOrder()
-  }, 1500)
+  }, 1500)  // 改为1.5秒，使提示更及时
 })
 
 // 音频播放
@@ -247,14 +251,15 @@ const handleOrderAction = (row: any, action: 'accept' | 'reject' | 'complete') =
 const getOrder = () => {
   http.get(`/admin/order?page=${currentPage.value}&page_size=${pageSize.value}`).then(res => {
     console.log(res.data.order_list)
-    const data = res.data.order_list.map((item: any, index: number) => {
-      item['index'] = (currentPage.value - 1) * pageSize.value + index + 1
-      return item
-    })
-    orderList.value = data
     total.value = parseInt(res.data.order_count)
     currentPage.value = parseInt(res.data.page_num)
     pageSize.value = parseInt(res.data.page_size)
+    
+    const data = res.data.order_list.map((item: any, index: number) => {
+      item['index'] = total.value - ((currentPage.value - 1) * pageSize.value + index)
+      return item
+    })
+    orderList.value = data
   })
 }
 
@@ -306,16 +311,18 @@ const hasNewOrder = () => {
       console.log('当前您有新订单')
       lastOrderId = res.data.lastId
       getOrder()
-      audioPlay.value = true
-      // 播放音乐
+      // 只有在真正有新订单时才播放音频
+      if (!audioPlay.value) {  // 防止重复播放
+        audioPlay.value = true
+      }
     }
     // 只有在第一次返回时才会触发
     if (!flag && lastOrderId == -1) {
       lastOrderId = res.data.lastId
     }
   }).catch(e => {
-    audioPlay.value = true
-    console.log(e)
+    // 移除错误时的音频播放
+    console.error('检查新订单时发生错误:', e)
   })
 }
 </script>
