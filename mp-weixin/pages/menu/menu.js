@@ -401,6 +401,8 @@ var _default = {
             var obj = {
               "total": _this3.totalPrice,
               "flavor_id": _this3.flavor,
+              //additional_info
+              "is_paid" :true,
               dishes: _this3.arr_sel
             };
             (0, _request.request)({
