@@ -481,6 +481,10 @@ var _default = {
                       _this3.clearCart();
                       // 清空本地存储
                       uni.removeStorageSync('cartData');
+                      // 重新获取菜品列表以更新销量
+                      _this3.getDishList();
+                      // 强制更新视图
+                      _this3.$forceUpdate();
                       // 跳转路由
                       setTimeout(function () {
                           return [uni.switchTab({
@@ -625,40 +629,29 @@ var _default = {
       (0, _request.request)({
         url: '/dish'
       }).then(function (res) {
-        // console.log(res)
-        // this.ADDDISHLIST()
         var dishList = res.dishList.map(function (item) {
           item['num'] = 0;
           item['price'] = parseInt(item.price);
           return item;
         });
-        var names = dishList.map(function (item) {
-          return item.name;
-        });
-        // console.log(names.length,names)
-        var result = names.reduce(function (pre, cur) {
-          if (cur in pre) {
-            pre[cur]++;
-          } else {
-            pre[cur] = 1;
-          }
-          return pre;
-        }, {});
-        console.log(result);
-        // const names2 = [...new Set(names)]
-        // console.log(names2.length,names2)
-
+        
+        // 更新菜品列表
         _this6.ADDDISHLIST(dishList);
+        
         // 构造新列表，根据type的索引将每一类菜品构造成新的数组
-        var _loop2 = function _loop2(i) {
+        var typeDishes = [];
+        for (var i = 0; i < _this6.list.length; i++) {
           var type_dish = dishList.filter(function (item) {
             return item.dish_type === _this6.list[i].name;
           });
-          _this6.ADD2DISH(type_dish);
-        };
-        for (var i = 0; i < _this6.list.length; i++) {
-          _loop2(i);
+          if (type_dish.length > 0) {
+            typeDishes.push(type_dish);
+          }
         }
+        
+        // 更新分类列表
+        _this6.$store.state.dishWithType = typeDishes;
+        
       }).catch(function (e) {
         console.log(e);
       });
