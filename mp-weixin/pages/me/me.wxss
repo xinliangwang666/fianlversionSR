@@ -50,7 +50,9 @@
 }
 .center-head .head .user-login view.data-v-259fb574 {
   color: #fff;
-  font-size: 22px;
+  font-size: 70rpx; /* 加大字号 */
+  font-weight: bold;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.2); /* 添加文字阴影 */
 }
 .center-head .head-info.data-v-259fb574 {
   height: 80px;
@@ -63,15 +65,28 @@
 .center-head .head-info .icon.data-v-259fb574 {
   font-size: 28px;
 }
+/* 积分文字样式 */
+.center-head .head-info .order .data-v-259fb574,
+.center-head .head-info .my-order .data-v-259fb574 {
+  font-size: 20px !important; /* 设置字号 */
+  font-weight: bold;           /* 加粗 */
+  color: #ff9900;              /* 可选：橙色 */
+}
+
 .info.data-v-259fb574 {
-  height: 40px;
+  height: 60px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   border-bottom: 1px solid #ccc;
+  padding-left: 30rpx;
 }
+.info.data-v-259fb574.no-shift {
+  padding-left: 0;
+}
+
 .info .icon.data-v-259fb574 {
-  font-size: 28px;
+  font-size: 50px;
 }
 .info .buy.data-v-259fb574 {
   margin-left: 15px;
@@ -79,3 +94,27 @@
   color: #191a1b;
 }
 
+.logo-container {
+  position: absolute;
+  bottom: -100rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1; /* 置于最底层 */
+}
+
+.logo-image {
+  width: 600rpx;
+  height: 600rpx;
+  opacity: 0.3; /* 设置透明度为 30% */
+  pointer-events: none; /* 确保图片不阻挡点击事件 */
+}
+
+.buy.data-v-259fb574 {
+  font-size: 50rpx;
+  color: #333;
+  font-weight: bold;
+  padding: 20rpx 0;
+}
+.buy.data-v-259fb574:active {
+  background-color: #e5e5e5; /* 点击时背景变深 */
+}

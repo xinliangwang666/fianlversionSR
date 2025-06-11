@@ -227,30 +227,27 @@ var _default = {
             url: '/register',
             method: 'POST',
             data: data
-          }).then(function (res) {
+          }).then(res => {
             uni.showLoading({
               title: '注册中...',
               mask: true
             });
-            setTimeout(function () {
-              // 模拟登录成功
+            setTimeout(() => {
               uni.hideLoading();
               uni.showToast({
                 title: '注册成功',
                 icon: 'success'
               });
-              _this.isLogin = true;
+              this.isLogin = true;
             }, 1000);
-          }).catch(function (e) {
-            setTimeout(function () {
-              // 模拟登录成功
-              uni.hideLoading();
-              uni.showToast({
-                title: '手机号已被注册',
-                icon: 'error'
-              });
-              _this.isLogin = true;
-            }, 1000);
+          }).catch(e => {
+            uni.hideLoading();
+            uni.showToast({
+              // title: e.msg || '注册失败',  // 使用后端返回的错误信息
+              title: e.msg || '注册失败',  // 使用后端返回的错误信息
+              icon: 'error',
+              duration: 2000
+            });
           });
           // console.log('注册成功')
           this.handleClose();

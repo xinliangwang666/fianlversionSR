@@ -103,21 +103,28 @@ class Register(View):
         gender = data.get('gender', 1)
         integral = 0
         print(name, password, phone, gender, integral, email)
+        
+        # 先检查必填字段是否都存在
+        if not all([name, password, phone, email]):
+            return JsonResponse({'status': 'error', 'msg': '缺少必填字段'}, status=400)
+            
+        # 分别检查用户名和手机号是否已被注册
+        if User.objects.filter(name=name).exists():
+            return JsonResponse({'status': 'error', 'msg': '该用户名已被注册'}, status=400)
+            
         if User.objects.filter(phone=phone).exists():
             return JsonResponse({'status': 'error', 'msg': '该手机号已被注册'}, status=400)
+            
+        # 如果都没有重复，创建新用户
+        obj = {'name': name, 'password': password, 'phone': phone, 'gender': gender, 'integral': integral}
+        if gender == '0':
+            obj['avatar_url'] = 'http://127.0.0.1:8000/media/users/girl.jpg'
         else:
-            if name and password and phone and email:
-                obj = {'name': name, 'password': password, 'phone': phone, 'gender': gender, 'integral': integral}
-                if gender == '0':
-                    obj['avatar_url'] = 'http://127.0.0.1:8000/media/users/girl.jpg'
-                else:
-                    obj['avatar_url'] = 'http://127.0.0.1:8000/media/users/boy.jpg'
-                print(obj)
-                user = User(**obj)
-                user.save()
-                return JsonResponse({'status': 'success', 'data': obj})
-            else:
-                return JsonResponse({'error': 'Missing required field'}, status=400)
+            obj['avatar_url'] = 'http://127.0.0.1:8000/media/users/boy.jpg'
+        print(obj)
+        user = User(**obj)
+        user.save()
+        return JsonResponse({'status': 'success', 'data': obj})
 
 
 # 发送新密码以及验证码
