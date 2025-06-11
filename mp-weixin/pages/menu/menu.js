@@ -301,10 +301,14 @@ var _default = {
     }
   },
   onLoad: function onLoad() {
+    // 获取菜品分类
     this.getDishType();
+    // 获取菜品列表
     this.getDishList();
-    this.getNoticeList();
+    // 获取口味列表
     this.getFlavorList();
+    // 获取公告列表
+    this.getNoticeList();
     uni.showLoading({
       title: '加载中...',
       mask: true
@@ -316,6 +320,46 @@ var _default = {
   // 下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
     this.getDishList();
+  },
+  onShow: function onShow() {
+    // 从本地存储获取购物车数据
+    const cartData = uni.getStorageSync('cartData');
+    if (cartData) {
+        // 先清空当前购物车
+        this.clearCart();
+        
+        // 恢复购物车数据
+        this.dishWithType.forEach(typeList => {
+            typeList.forEach(dish => {
+                const savedDish = cartData.find(item => item.id === dish.id);
+                if (savedDish && savedDish.num > 0) {
+                    // 使用循环添加商品，确保数量正确
+                    for(let i = 0; i < savedDish.num; i++) {
+                        this.ADD2CART({
+                            dish: dish,
+                            add: true
+                        });
+                    }
+                }
+            });
+        });
+    }
+  },
+  onHide: function onHide() {
+    // 保存购物车数据到本地存储
+    const cartData = [];
+    this.dishWithType.forEach(typeList => {
+        typeList.forEach(dish => {
+            if (dish.num > 0) {
+                cartData.push({
+                    id: dish.id,
+                    num: dish.num,
+                    price: dish.price
+                });
+            }
+        });
+    });
+    uni.setStorageSync('cartData', cartData);
   },
   methods: _objectSpread(_objectSpread({}, (0, _vuex.mapMutations)(['ADD2CART', 'ADD2DISH', 'clearCart', 'ADDDISHLIST'])), {}, {
     // 推荐菜品列表滑动
@@ -381,71 +425,84 @@ var _default = {
     // 菜单内容
     cat: function cat() {
       var _this3 = this;
+      // 重置已选菜品数组
+      this.arr_sel = [];
+      
       // 点击结算之后对菜品进行处理
       this.dishWithType.forEach(function (item, indexs) {
-        item.forEach(function (dish, index) {
-          if (dish.num > 0) {
-            // console.log('当前是', dish.name, '数量大于0', indexs, index)
-            _this3.arr_sel.push(dish);
-          }
-        });
+          item.forEach(function (dish, index) {
+              if (dish.num > 0) {
+                  // console.log('当前是', dish.name, '数量大于0', indexs, index)
+                  _this3.arr_sel.push({
+                      ...dish,
+                      num: dish.num  // 确保正确的数量被记录
+                  });
+              }
+          });
       });
-      uni.showModal({
-        title: '确认支付',
-        content: this.arr_sel.map(function (item) {
-          return item.name + '-' + item.num + '-' + item.num * item.price + '\n';
-        }).join(''),
-        success: function success(res) {
-          if (res.confirm) {
-            console.log('点击了确认');
-            var obj = {
-              "total": _this3.totalPrice,
-              "flavor_id": _this3.flavor,
-              //additional_info
-              "is_paid" :true,
-              dishes: _this3.arr_sel
-            };
-            (0, _request.request)({
-              url: '/order',
-              method: 'POST',
-              data: obj
-            }).then(function (res) {
-              console.log(res);
-              uni.showToast({
-                title: '支付成功',
-                duration: 2000
-              });
-              // 关闭弹窗
-              _this3.modalName = false;
-              // 清空购物车
-              _this3.clearCart();
-              // 跳转路由
-              setTimeout(function () {
-                return [uni.switchTab({
-                  url: '../order/order'
-                })];
-              }, 2000);
-            }).catch(function (e) {
-              console.log(e);
-              uni.showToast({
-                title: '支付失败',
-                icon: "error",
-                duration: 2000
-              });
-            });
-          } else if (res.cancel) {
-            uni.showToast({
-              title: '支付取消',
-              icon: 'error',
-              duration: 2000
-            }, 2000);
-          }
-        }
-      });
-      // }
 
-      setTimeout(function () {
-        uni.hideToast();
+      // 如果购物车为空，不显示确认框
+      if (this.arr_sel.length === 0) {
+          uni.showToast({
+              title: '购物车为空',
+              icon: 'none',
+              duration: 2000
+          });
+          return;
+      }
+
+      uni.showModal({
+          title: '确认支付',
+          content: this.arr_sel.map(function (item) {
+              return item.name + ' × ' + item.num + ' = ￥' + (item.num * item.price) + '\n';
+          }).join(''),
+          success: function success(res) {
+              if (res.confirm) {
+                  console.log('点击了确认');
+                  var obj = {
+                      "total": _this3.totalPrice,
+                      "flavor_id": _this3.flavor,
+                      "is_paid": true,
+                      dishes: _this3.arr_sel
+                  };
+                  (0, _request.request)({
+                      url: '/order',
+                      method: 'POST',
+                      data: obj
+                  }).then(function (res) {
+                      console.log(res);
+                      uni.showToast({
+                          title: '支付成功',
+                          duration: 2000
+                      });
+                      // 关闭弹窗
+                      _this3.modalName = false;
+                      // 清空购物车
+                      _this3.clearCart();
+                      // 清空本地存储
+                      uni.removeStorageSync('cartData');
+                      // 跳转路由
+                      setTimeout(function () {
+                          return [uni.switchTab({
+                              url: '../order/order'
+                          })];
+                      }, 2000);
+                  }).catch(function (e) {
+                      console.log(e);
+                      uni.showToast({
+                          title: '支付失败',
+                          icon: "error",
+                          duration: 2000
+                      });
+                  });
+              } else if (res.cancel) {
+                  uni.showToast({
+                      title: '支付取消',
+                      icon: 'error',
+                      duration: 2000
+                  });
+              }
+          }
       });
     },
     hideModal: function hideModal() {
@@ -501,6 +558,7 @@ var _default = {
       this.clearCart();
       this.flavor = 1;
       this.modalName = false;
+      uni.removeStorageSync('cartData');
     },
     openBag: function openBag() {
       // this.modalName = this.modalName == 1 ? 0 : 1;

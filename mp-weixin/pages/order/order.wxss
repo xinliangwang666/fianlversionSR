@@ -1,91 +1,364 @@
 @charset "UTF-8";
-/**
- * 这里是uni-app内置的常用样式变量
- *
- * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
- * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
- *
- */
-/**
- * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
- *
- * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
- */
-/* 颜色变量 */
-/* 行为相关颜色 */
-/* 文字基本颜色 */
-/* 背景颜色 */
-/* 边框颜色 */
-/* 尺寸变量 */
-/* 文字尺寸 */
-/* 图片尺寸 */
-/* Border Radius */
-/* 水平间距 */
-/* 垂直间距 */
-/* 透明度 */
-/* 文章场景相关 */
-.uni-margin-wrap.data-v-127632e4 {
-  width: 690rpx;
-}
-.cu-item.data-v-127632e4 {
+
+/* 页面整体美化 */
+.order-box.data-v-127632e4 {
+  background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
   width: 100%;
-  text-align: center;
-  background-color: #f1f1f1;
-  margin: 0;
-  border: none;
+}
+
+/* 顶部选项卡美化 */
+.order-sub.data-v-127632e4 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.3);
+  padding: 0;
+  width: 100%;
+}
+
+/* swiper 美化 */
+.my-swiper.data-v-127632e4 {
+  background: transparent;
+  width: 100%;
+}
+
+/* 历史订单区域美化 */
+.historical-order.data-v-127632e4 {
+  padding: 20rpx;
+  width: 100%;
+}
+
+.order-list-box.data-v-127632e4 {
+  width: 100%;
+  background-color: transparent;
+  padding: 0;
+}
+
+/* 订单项卡片美化 */
+.order-list-box .order-item.data-v-127632e4 {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 30rpx;
+  border-radius: 24rpx;
+  background: white;
+  box-shadow: 0 16rpx 64rpx rgba(0, 0, 0, 0.08);
+  overflow: hidden;
   position: relative;
+  animation: fadeInUp 0.5s ease;
 }
-.cu-item.cur.data-v-127632e4 {
-  background-color: #fff;
+
+/* 订单头部美化 */
+.dish-title.data-v-127632e4 {
+  background: linear-gradient(90deg, #fafafa 0%, #ffffff 100%);
+  padding: 30rpx 40rpx 20rpx;
+  border-bottom: 2rpx solid #f0f0f0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
 }
-.cu-item.cur.data-v-127632e4::after {
-  content: "";
-  width: 8rpx;
-  height: 30rpx;
-  border-radius: 10rpx 0 0 10rpx;
-  position: absolute;
-  background-color: #f37b1d;
-  top: 0;
-  right: 0rpx;
-  bottom: 0;
-  margin: auto;
+
+/* 订单状态标签美化 */
+.order-status.data-v-127632e4 {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%) !important;
+  color: white !important;
+  padding: 12rpx 20rpx !important;
+  border-radius: 30rpx !important;
+  font-size: 22rpx !important;
+  font-weight: 500 !important;
+  box-shadow: 0 4rpx 12rpx rgba(76, 175, 80, 0.3);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
-.cu-list.menu-avatar > .cu-item .content.data-v-127632e4 {
-  width: calc(100% - 120rpx);
+
+/* 菜品项重新布局 */
+.dish-box.data-v-127632e4 {
+  background-color: #FFFFFF !important;
+  padding: 20rpx;
+  border-bottom: 2rpx solid #f8f8f8;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
 }
+
+/* 菜品图片美化 */
+.dish-box .img.data-v-127632e4 {
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.dish-box .img image.data-v-127632e4 {
+  width: 120rpx !important;
+  height: 120rpx !important;
+  border-radius: 20rpx !important;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 菜品信息区域重新布局 */
+.dish_name.data-v-127632e4 {
+  font-size: 32rpx !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  line-height: 1.3;
+  margin-bottom: 10rpx;
+  width: 200rpx;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 菜品价格美化 */
+.dish_price.data-v-127632e4 {
+  font-size: 32rpx !important;
+  font-weight: 700 !important;
+  color: #ff6b35 !important;
+  width: 120rpx;
+  text-align: center;
+}
+
+/* 菜品数量美化 */
+.dish_num.data-v-127632e4 {
+  font-size: 28rpx !important;
+  color: #999 !important;
+  background: #f0f0f0;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  width: 80rpx;
+  text-align: center;
+}
+
+/* 菜品小计美化 */
+.dish_total.data-v-127632e4 {
+  font-size: 32rpx !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  width: 120rpx;
+  text-align: right;
+}
+
+/* ===== 当前订单显示修复 ===== */
+
+/* 当前订单列表美化 */
+.cu-list.menu-avatar.data-v-127632e4 {
+  background: transparent;
+  padding: 20rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 当前订单项目 */
 .cu-list.menu-avatar > .cu-item.data-v-127632e4 {
-  height: 100px;
+  background: white !important;
+  border-radius: 24rpx !important;
+  margin-bottom: 20rpx !important;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.06) !important;
+  overflow: visible !important;
+  position: relative !important;
+  height: auto !important;
+  padding: 0 !important;
+  border: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: block !important;
 }
+
+/* 当前订单头像 */
+.cu-avatar.lg.data-v-127632e4 {
+  width: 120rpx !important;
+  height: 120rpx !important;
+  border-radius: 20rpx !important;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1) !important;
+  margin: 20rpx !important;
+  float: left !important;
+  flex-shrink: 0 !important;
+}
+
+/* 当前订单内容区域 */
+.cu-list.menu-avatar > .cu-item .content.data-v-127632e4 {
+  margin-left: 160rpx !important;
+  padding: 20rpx 100rpx 20rpx 0 !important;
+  width: calc(100% - 180rpx) !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  position: relative !important;
+}
+
+/* 菜品名称 */
+.cu-list.menu-avatar > .cu-item .content > view:first-child.data-v-127632e4 {
+  font-size: 32rpx !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  margin-bottom: 12rpx !important;
+  line-height: 1.3 !important;
+}
+
+/* 菜品描述 */
+.dish-desc.data-v-127632e4 {
+  font-size: 24rpx !important;
+  color: #666 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 16rpx !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* 价格和操作区域 */
+.cu-list.menu-avatar > .cu-item .content .grid.data-v-127632e4 {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: 16rpx !important;
+  padding: 0 !important;
+  position: relative !important;
+}
+
+/* 左侧价格区域 */
+.cu-list.menu-avatar > .cu-item .content .grid .text-left.data-v-127632e4 {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  max-width: calc(100% - 100rpx) !important;
+}
+
+/* 价格显示 */
+.cu-list.menu-avatar > .cu-item .content .grid .text-left text:first-child.data-v-127632e4 {
+  font-size: 36rpx !important;
+  font-weight: 700 !important;
+  color: #ff6b35 !important;
+  margin-bottom: 6rpx !important;
+}
+
+/* 销量显示 */
+.cu-list.menu-avatar > .cu-item .content .grid .text-left text:last-child.data-v-127632e4 {
+  font-size: 24rpx !important;
+  color: #999 !important;
+}
+
+/* 右侧操作区域 - 只显示数量 */
+.cu-list.menu-avatar > .cu-item .content .grid .text-right.data-v-127632e4 {
+  position: absolute !important;
+  right: 20rpx !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 80rpx !important;
+  min-width: 80rpx !important;
+  z-index: 100 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* 隐藏数量左右两个圆形按钮 */
+.cu-list.menu-avatar > .cu-item .content .grid .text-right .cu-btn.cuIcon {
+  display: none !important;
+}
+
+/* 数量显示美化 */
+.cu-list.menu-avatar > .cu-item .content .grid .text-right text.data-v-127632e4 {
+  font-size: 32rpx !important;
+  font-weight: 700 !important;
+  color: #ff6b35 !important;
+  min-width: 60rpx !important;
+  text-align: center !important;
+  background: #fff2ee !important;
+  padding: 8rpx 12rpx !important;
+  border-radius: 20rpx !important;
+  border: 2rpx solid #ff6b35 !important;
+  flex-shrink: 0 !important;
+  line-height: 1.2 !important;
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 53, 0.2) !important;
+}
+
+/* 未支付状态标签 */
+.cu-item .order-status.data-v-127632e4 {
+  position: absolute !important;
+  top: 20rpx !important;
+  right: 20rpx !important;
+  background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%) !important;
+  z-index: 10 !important;
+  padding: 8rpx 16rpx !important;
+  border-radius: 20rpx !important;
+  font-size: 20rpx !important;
+  color: white !important;
+}
+
+/* 再来一单按钮美化 */
+.cu-btn.bg-blue.data-v-127632e4 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 40rpx !important;
+  padding: 20rpx 40rpx !important;
+  font-size: 26rpx !important;
+  font-weight: 500 !important;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3) !important;
+}
+
+/* 修复底部订单信息显示 */
+.order-list-box .order-item .flex.justify-end.data-v-127632e4 {
+  padding: 20rpx 40rpx;
+  background: #fafafa;
+  border-top: 2rpx solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 清除浮动 */
+.cu-list.menu-avatar > .cu-item.data-v-127632e4::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 保持原有必要样式 */
 .swiper-item.data-v-127632e4 {
   display: block;
-  text-align: center;
+  width: 100%;
 }
+
 .swiper-list.data-v-127632e4 {
   margin-top: 40rpx;
   margin-bottom: 0;
 }
-.current-order.data-v-127632e4 {
-  background-color: #4cd964;
-}
-.cover.data-v-127632e4 {
-  width: 150rpx;
-  height: 150rpx;
-}
-.order-list-box.data-v-127632e4 {
-  width: 100vw;
-  background-color: #CCCCCC;
-}
-.order-list-box .order-item.data-v-127632e4 {
-  width: 100%;
-  padding: 4px;
-  border-radius: 4px;
-}
-.order-list-box .order-item .dish-box.data-v-127632e4 {
-  background-color: #FFFFFF;
-}
-.order-list-box .order-item .dish-box .img image.data-v-127632e4 {
-  width: 50px;
-  height: 50px;
-  border-radius: 10px;
-}
 
+/* 响应式设计 */
+@media screen and (max-width: 750rpx) {
+  .cu-list.menu-avatar > .cu-item .content.data-v-127632e4 {
+    padding: 20rpx 90rpx 20rpx 0 !important;
+  }
+
+  .cu-list.menu-avatar > .cu-item .content .grid .text-right.data-v-127632e4 {
+    width: 70rpx !important;
+  }
+}
