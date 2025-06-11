@@ -177,7 +177,6 @@ var _default = {
     // 再来一单
     againOrder: function againOrder(item) {
       var _this3 = this;
-      // console.log('点击了再来一单')
       console.log(item);
       var dishList = [];
       item.dishes.forEach(function (dish) {
@@ -188,27 +187,47 @@ var _default = {
         };
         dishList.push(obj);
       });
-      (0, _request.request)({
-        url: '/order',
-        method: 'POST',
-        data: {
-          total: item.order_total,
-          flavor_id: 1,
-          dishes: dishList
+
+      // 显示确认支付弹窗
+      uni.showModal({
+        title: '确认支付',
+        content: item.dishes.map(function (dish) {
+          return dish.dish_name + ' × ' + dish.dish_count + ' = ￥' + (dish.dish_count * dish.dish_price) + '\n';
+        }).join(''),
+        success: function success(res) {
+          if (res.confirm) {
+            // 用户点击确认，发送请求生成订单
+            (0, _request.request)({
+              url: '/order',
+              method: 'POST',
+              data: {
+                total: item.order_total,
+                flavor_id: 1,
+                dishes: dishList
+              }
+            }).then(function (res) {
+              uni.showToast({
+                icon: 'success',
+                title: '订购成功',
+                duration: 2000
+              });
+              _this3.getOrderList();
+            }).catch(function () {
+              uni.showToast({
+                icon: 'error',
+                title: '订购失败',
+                duration: 2000
+              });
+            });
+          } else {
+            // 用户点击取消
+            uni.showToast({
+              title: '已取消支付',
+              icon: 'none',
+              duration: 2000
+            });
+          }
         }
-      }).then(function (res) {
-        uni.showToast({
-          icon: 'success',
-          title: '订购成功',
-          duration: 2000
-        });
-        _this3.getOrderList();
-      }).catch(function () {
-        uni.showToast({
-          icon: 'error',
-          title: '订购失败',
-          duration: 2000
-        });
       });
     },
     getOrderList: function getOrderList() {
