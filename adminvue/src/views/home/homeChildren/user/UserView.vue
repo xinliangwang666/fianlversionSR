@@ -158,4 +158,4 @@ const editUser = (id: number) => {
   width: 100%;
   margin: 30px 30%;
 }
-</style>
+</style> 
