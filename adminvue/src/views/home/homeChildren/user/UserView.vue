@@ -9,7 +9,12 @@
         </template>
       </el-table-column>
       <el-table-column prop="name" label="用户名" width="120" align="center" header-align="center" />
-      <el-table-column prop="password" label="密码" width="200" align="center" header-align="center" />
+      <el-table-column label="密码" width="200" align="center" header-align="center">
+        <template #default="{ row }">
+          <span v-if="userRole === '管理员' || userRole === '超级管理员'">{{ row.password }}</span>
+          <span v-else>******</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="gender" label="性别" width="100" align="center" header-align="center" />
       <el-table-column prop="phone" label="电话" width="120" align="center" header-align="center" />
       <el-table-column prop="email" label="邮箱" width="220" align="center" header-align="center" />

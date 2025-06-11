@@ -517,7 +517,7 @@ class OrderView(View):
                 dish_obj.save()
             if is_paid:
                 user = User.objects.get(id=user_id)
-                points_to_add = int(total / 10)  # 支付金额/10作为积分
+                points_to_add = int(total / 10) # 支付金额/10作为积分
                 user.integral += points_to_add
                 user.save()
             return JsonResponse({

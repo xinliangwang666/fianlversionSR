@@ -2,7 +2,7 @@
   <div class="login-swiper">
     <!-- <div class="img"> -->
     <form class="form">
-     <h2 class="system-title">未来领鲜后台系统</h2>
+     <h2 class="system-title">味来领鲜后台系统</h2>
       <label class="lb" for="name">账号</label>
       <input name="name" id="name" type="text" v-model="userInfo.username" autocomplete="current-password" class="infos"
         @blur="checkRole" autofocus>

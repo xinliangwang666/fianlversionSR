@@ -96,7 +96,14 @@ import { ElMessageBox, ElMessage } from 'element-plus'
 const myAudio = ref<HTMLAudioElement | null>(null)
 let lastOrderId = -1
 
+// 添加用户角色
+const userRole = ref('')
+
 onMounted(() => {
+  // 获取用户信息
+  const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}')
+  userRole.value = userInfo.role || '商家'
+
   if (myAudio.value != null) {
     myAudio.value.src = require('@/assets/newOrder.mp3')
     myAudio.value.controls = true
@@ -107,7 +114,7 @@ onMounted(() => {
   hasNewOrder()
   setInterval(() => {
     hasNewOrder()
-  }, 8000)
+  }, 1500)
 })
 
 // 音频播放
@@ -186,35 +193,35 @@ const orderList = ref([
 ])
 
 // 整合DeepSeek的状态标签方法
-const getStatusTagType = (status: string) => {
+const getStatusTagType = (status: 'unpaid' | 'paid' | 'accepted' | 'rejected' | 'completed') => {
   const map = {
     'unpaid': 'warning',
     'paid': '',
     'accepted': 'success',
     'rejected': 'danger',
     'completed': 'info'
-  }
+  } as const
   return map[status] || ''
 }
 
-const getStatusText = (status: string) => {
+const getStatusText = (status: 'unpaid' | 'paid' | 'accepted' | 'rejected' | 'completed') => {
   const map = {
     'unpaid': '待支付',
     'paid': '已支付',
     'accepted': '已接单',
     'rejected': '已拒绝',
     'completed': '已完成'
-  }
+  } as const
   return map[status] || status
 }
 
 // 整合DeepSeek的订单状态更新逻辑
-const handleOrderAction = (row: any, action: string) => {
+const handleOrderAction = (row: any, action: 'accept' | 'reject' | 'complete') => {
   const actionTextMap = {
     'accept': '接单',
     'reject': '拒单',
     'complete': '完成'
-  }
+  } as const
   
   ElMessageBox.confirm(
     `确定要${actionTextMap[action] || action}订单吗?`,

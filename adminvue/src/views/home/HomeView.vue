@@ -3,7 +3,7 @@
     <el-container>
       <el-aside width="200px">
         <div class="logo">
-          <h1>未来领鲜</h1>
+          <h1>味来领鲜</h1>
         </div>
         <LeftMenu></LeftMenu>
       </el-aside>
