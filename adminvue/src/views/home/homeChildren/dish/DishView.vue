@@ -16,8 +16,21 @@
       </el-table-column>
       <el-table-column label="操作" width="200" align="center" header-align="center">
         <template v-slot="{ row }">
-          <el-button type="danger" size="small" @click="handleDelete(row.id)">删除</el-button>
-          <el-button type="warning" size="small" @click="handleEdit(row.id)">编辑</el-button>
+          <el-button 
+            v-if="userRole === '管理员' || userRole === '商家'"
+            type="danger" 
+            size="small" 
+            @click="handleDelete(row.id)"
+          >
+            删除
+          </el-button>
+          <el-button 
+            type="warning" 
+            size="small" 
+            @click="handleEdit(row.id)"
+          >
+            编辑
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -52,6 +65,17 @@ const handleCurrentChange = (val: number) => {
   currentPage.value = val
   getDish()
 }
+
+// 获取用户角色
+const userRole = ref('')
+
+onMounted(() => {
+  // 获取用户信息
+  const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}')
+  userRole.value = userInfo.role || '商家'
+  
+  getDish()
+})
 
 
 
@@ -123,9 +147,6 @@ const handleDelete = (id: number) => {
       })
     })
 };
-onMounted(() => {
-  getDish()
-});
 
 
 </script>

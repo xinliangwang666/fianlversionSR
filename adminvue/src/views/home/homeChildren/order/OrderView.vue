@@ -35,7 +35,7 @@
     <!-- 整合后的操作列 -->
     <el-table-column fixed="right" label="操作" width="280" align="center">
       <template #default="{ row }">
-        <!-- 接单按钮：仅显示给已支付订单 -->
+        <!-- 接单按钮：商家和管理员都可见 -->
         <el-button
           v-if="row.status === 'paid'"
           type="success"
@@ -45,7 +45,7 @@
           接单
         </el-button>
 
-        <!-- 拒单按钮：仅显示给已支付订单 -->
+        <!-- 拒单按钮：商家和管理员都可见 -->
         <el-button
           v-if="row.status === 'paid'"
           type="warning"
@@ -56,7 +56,7 @@
           拒单
         </el-button>
 
-        <!-- 完成按钮：仅显示给已接单订单 -->
+        <!-- 完成按钮：商家和管理员都可见 -->
         <el-button
           v-if="row.status === 'accepted'"
           type="primary"
@@ -67,8 +67,9 @@
           出餐完成
         </el-button>
 
-        <!-- 原有删除按钮 -->
+        <!-- 删除按钮：只有管理员和超管可见 -->
         <el-button
+          v-if="userRole === '管理员' || userRole === '超级管理员'"
           type="danger"
           size="small"
           @click="deleteOrder(row)"

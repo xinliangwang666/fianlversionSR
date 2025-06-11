@@ -7,7 +7,14 @@
     <el-table-column prop="role" label="角色" align="center" header-align="center"></el-table-column>
     <el-table-column label="操作" align="center" header-align="center">
       <template v-slot="{ row }">
-        <el-button type="danger" size="small" @click="handleDelete(row.id)">删除</el-button>
+        <el-button 
+          v-if="userRole === '管理员' || userRole === '超级管理员'"
+          type="danger" 
+          size="small" 
+          @click="handleDelete(row.id)"
+        >
+          删除
+        </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -43,7 +50,15 @@ const getAdmin = () => {
   })
 
 }
+
+// 获取用户角色
+const userRole = ref('')
+
 onMounted(() => {
+  // 获取用户信息
+  const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}')
+  userRole.value = userInfo.role || '商家'
+  
   getAdmin()
 })
 

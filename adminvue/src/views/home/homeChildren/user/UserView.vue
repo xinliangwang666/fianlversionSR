@@ -16,8 +16,22 @@
       <el-table-column prop="integral" label="积分" width="120" align="center" header-align="center" />
       <el-table-column fixed="right" label="Operations" width="220" align="center" header-align="center">
         <template #default="{ row }">
-          <el-button type="danger" size="small" @click="deleteUser(row.id)">删除</el-button>
-          <el-button type="primary" size="small" @click="editUser(row.id)">编辑</el-button>
+          <el-button 
+            v-if="userRole === '管理员' || userRole === '超级管理员'"
+            type="danger" 
+            size="small" 
+            @click="deleteUser(row.id)"
+          >
+            删除
+          </el-button>
+          <el-button 
+            v-if="userRole === '管理员' || userRole === '超级管理员'"
+            type="primary" 
+            size="small" 
+            @click="editUser(row.id)"
+          >
+            编辑
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -36,9 +50,18 @@ import { UserType } from '@/utils/types'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+
+// 获取用户角色
+const userRole = ref('')
+
 onMounted(() => {
+  // 获取用户信息
+  const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}')
+  userRole.value = userInfo.role || '商家'
+  
   getUser()
 })
+
 // 当前页数
 const currentPage = ref(1)
 // 菜品总数
