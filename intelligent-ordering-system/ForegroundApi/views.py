@@ -370,6 +370,8 @@ class GuessLike(View):
                 reverse=True
             )
 
+
+
             # 将排好序的菜品信息组装成字典
             dish_list = []
             for dish_id, count in sorted_dish_list:
@@ -394,40 +396,6 @@ class GuessLike(View):
                 "total": 0
             })
 
-    # def get(self, request):
-    #     session_id = request.headers.get('Authorization').split(' ')[1]
-    #     session = Session.objects.get(session_key=session_id)
-    #     user_data = session.get_decoded()
-    #
-    #     user_id = user_data['info']['id']
-    #     # 订单表中查找到该用户的所有订单
-    #     dish_list = []
-    #     orders = Order.objects.filter(user_id=user_id)
-    #     if orders.exists():
-    #         # order_list = []
-    #         # 遍历所有订单，在订单详情表中查询到它的点菜记录
-    #         for order in orders:
-    #             dishes = OrderInfo.objects.filter(order=order)
-    #             print(dishes.values())
-    #             for di in dishes:
-    #                 dish_info = {
-    #                     "id": di.dish_id,
-    #                     "price": di.dish.dish_price,
-    #                     "desc": di.dish.dish_desc,
-    #                     "name": di.dish.dish_name,
-    #                     "img": di.dish.dish_img
-    #                 }
-    #                 dish_list.append(dish_info)
-    #
-    #         return JsonResponse({
-    #             "dishList": dish_list,
-    #             "total": len(dish_list)
-    #         })
-    #     else:
-    #         return JsonResponse({
-    #             "dishList": [],
-    #             "total": 0
-    #         })
 
 
 # 订单页面

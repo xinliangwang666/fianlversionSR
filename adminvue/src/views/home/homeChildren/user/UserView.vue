@@ -19,6 +19,20 @@
       <el-table-column prop="phone" label="电话" width="120" align="center" header-align="center" />
       <el-table-column prop="email" label="邮箱" width="220" align="center" header-align="center" />
       <el-table-column prop="integral" label="积分" width="120" align="center" header-align="center" />
+      <el-table-column prop="addr" label="收货地址" min-width="200" align="center" header-align="center">
+        <template #default="{ row }">
+          <el-tooltip
+            v-if="row.addr"
+            class="box-item"
+            effect="dark"
+            :content="row.addr"
+            placement="top-start"
+          >
+            <span>{{ row.addr }}</span>
+          </el-tooltip>
+          <span v-else>暂无地址</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="Operations" width="220" align="center" header-align="center">
         <template #default="{ row }">
           <el-button 
@@ -83,11 +97,6 @@ const handleCurrentChange = (val: number) => {
   currentPage.value = val
   getUser()
 }
-
-
-
-
-
 
 // 定义用户列表
 const userData = ref<UserType[]>([])
@@ -157,5 +166,12 @@ const editUser = (id: number) => {
 .my-page {
   width: 100%;
   margin: 30px 30%;
+}
+
+/* 地址文本超出显示省略号 */
+.el-table .cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style> 

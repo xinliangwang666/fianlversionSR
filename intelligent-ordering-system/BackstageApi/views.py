@@ -179,14 +179,10 @@ class AdminInfo(View):
 
 # 用户管理
 class UserInfo(View):
-    # @method_decorator(check_session_id)
-    # @staticmethod
     def get(self, request):
         user_id = request.GET.get('id')
-        # print(id, type(id))
         # 如果是有id存在，则说明是获取某个用户的具体信息，否则就是获取全部列表
         if user_id is not None:
-
             res = User.objects.filter(id=user_id)
             if res.exists():
                 user = res.first()
@@ -199,7 +195,8 @@ class UserInfo(View):
                     "integral": user.integral,
                     "phone": user.phone,
                     "email": user.email,
-                    "avatar_img": user.avatar_url
+                    "avatar_img": user.avatar_url,
+                    "addr": user.addr
                 }
                 return JsonResponse({"data": obj})
             else:
@@ -214,8 +211,17 @@ class UserInfo(View):
             paginator = Paginator(users, page_size)
             page = paginator.get_page(page_num)
             for user in page:
-                obj = {'id': user.id, 'avatar_url': user.avatar_url, 'name': user.name, 'password': user.password,
-                       'phone': user.phone, 'gender': user.gender, 'integral': user.integral, 'email': user.email}
+                obj = {
+                    'id': user.id,
+                    'avatar_url': user.avatar_url,
+                    'name': user.name,
+                    'password': user.password,
+                    'phone': user.phone,
+                    'gender': user.gender,
+                    'integral': user.integral,
+                    'email': user.email,
+                    'addr': user.addr
+                }
                 user_list.append(obj)
             return JsonResponse({
                 "data": {
@@ -228,14 +234,21 @@ class UserInfo(View):
 
     @method_decorator(check_session_id)
     def put(self, request):
+        # 获取当前用户的角色
+        session_id = request.headers.get('Authorization').split(' ')[1]
+        session = Session.objects.get(session_key=session_id)
+        current_role = session.get_decoded()['info']['role']
+
         data = json.loads(request.body)
-        # pprint.pprint(data)
         user_id = data.get('user_id')
         password = data.get('password')
         gender = data.get('gender')
         integral = data.get('integral')
         phone = data.get('phone')
         email = data.get('email')
+        addr = data.get('addr')
+
+        # 创建基本更新字段
         obj = {
             "password": password,
             "gender": gender,
@@ -243,9 +256,14 @@ class UserInfo(View):
             "phone": phone,
             "email": email,
         }
-        print(type(data), data.keys())
+
+        # 只有管理员（role=0）可以修改地址
+        if current_role == 0 and addr is not None:
+            obj["addr"] = addr
+        elif current_role != 0 and addr is not None:
+            return JsonResponse({"status": "error", "msg": "只有管理员可以修改用户地址"}, status=403)
+
         user = User.objects.filter(id=user_id)
-        print(user)
         if user.exists():
             user.update(**obj)
             return JsonResponse({"status": "success"})
@@ -258,7 +276,6 @@ class UserInfo(View):
         user = User.objects.filter(id=id).first()
         if user:
             name = user.name
-
             user.delete()
             return JsonResponse({'status': 'success', 'data': name, 'count': 1})
         else:

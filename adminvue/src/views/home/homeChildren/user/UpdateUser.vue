@@ -7,7 +7,6 @@
       <el-input v-model="form.password" />
     </el-form-item>
     <el-form-item label="性别">
-
       <el-select v-model="form.gender" placeholder="请选择性别">
         <el-option label="男" :value="1" />
         <el-option label="女" :value="0" />
@@ -22,6 +21,12 @@
     <el-form-item label="邮箱">
       <el-input v-model="form.email" />
     </el-form-item>
+    <el-form-item label="收货地址" v-if="userRole === '超级管理员'">
+      <el-input v-model="form.addr" type="textarea" :rows="3" placeholder="请输入收货地址" />
+    </el-form-item>
+    <el-form-item label="收货地址" v-else>
+      <el-input v-model="form.addr" type="textarea" :rows="3" disabled />
+    </el-form-item>
 
     <el-form-item>
       <el-button type="primary" @click="onSubmit">确认</el-button>
@@ -33,14 +38,32 @@
 
 <script lang="ts" setup>
 import http from '@/utils/http'
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
-// do not use same name with ref
+
+interface UpdateUserData {
+  user_id: number;
+  password: string;
+  gender: number;
+  integral: number;
+  phone: string;
+  email: string;
+  addr?: string;
+}
+
 const route = useRoute()
 const router = useRouter()
 let user_id = 0
+
+// 获取用户角色
+const userRole = ref('')
+
 onMounted(() => {
+  // 获取用户信息
+  const userInfo = JSON.parse(localStorage.getItem('loginUser') || '{}')
+  userRole.value = userInfo.role || '商家'
+
   const params = route.params
   console.log(params, typeof (params), Object.keys(params));
 
@@ -49,8 +72,8 @@ onMounted(() => {
     user_id = parseInt(id)
     getInfo(parseInt(id))
   }
-
 })
+
 let form = reactive({
   name: '',
   password: '',
@@ -58,10 +81,13 @@ let form = reactive({
   integral: 0,
   phone: '134545848',
   email: '',
-  avatar_img: ''
+  avatar_img: '',
+  addr: ''
 })
+
 // 做缓存
 let userData = {}
+
 // 根据id获取用户信息
 const getInfo = (id: number) => {
   http.get(`/admin/user?id=${id}`).then(res => {
@@ -70,15 +96,23 @@ const getInfo = (id: number) => {
     Object.assign(form, res.data)
   })
 }
+
 const onSubmit = () => {
-  http.put('/admin/user', {
+  const updateData: UpdateUserData = {
     user_id: user_id,
     password: form.password,
     gender: form.gender,
     integral: form.integral,
     phone: form.phone,
     email: form.email,
-  }).then(() => {
+  }
+
+  // 只有超级管理员可以修改地址
+  if (userRole.value === '超级管理员') {
+    updateData.addr = form.addr
+  }
+
+  http.put('/admin/user', updateData).then(() => {
     ElNotification({
       title: '成功',
       message: '用户信息更新成功',
@@ -87,8 +121,16 @@ const onSubmit = () => {
     router.push('/home/user/list')
   })
 }
+
 // 重置
 const reset = () => {
   Object.assign(form, userData)
 }
 </script>
+
+<style>
+.el-form {
+  max-width: 600px;
+  margin: 20px auto;
+}
+</style>
