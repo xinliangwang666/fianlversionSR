@@ -1,0 +1,76 @@
+.about-container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  padding: 40rpx;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60rpx 0;
+  background: linear-gradient(to bottom, #007AFF, #1E90FF);
+  border-radius: 20rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 122, 255, 0.2);
+}
+
+.logo image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 20rpx;
+}
+
+.content {
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40rpx;
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80rpx;
+  height: 4rpx;
+  background-color: #007AFF;
+  border-radius: 2rpx;
+}
+
+.description {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 60rpx;
+  padding: 0 20rpx;
+}
+
+.version {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #eee;
+}
+
+/* 添加动画效果 */
+.logo image {
+  transition: transform 0.3s ease;
+}
+
+.logo image:active {
+  transform: scale(0.95);
+} 

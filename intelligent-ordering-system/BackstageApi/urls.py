@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2025/5/8 19:09
-# @Author  : 清风徐来
-# @FileName: urls.py
-# @Software: PyCharm
+
 from django.urls import path
 from .views import Login, AdminInfo, UserInfo, NoticeInfo, DishInfo,NewOrder
 from .views import DishTypeInfo, DishFlavorInfo,OrderManage,UpdateDish

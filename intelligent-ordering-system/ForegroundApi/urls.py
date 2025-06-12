@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2025/5/10 21:36
-# @Author  : 清风徐来
-# @FileName: urls.py
-# @Software: PyCharm
+
 
 from django.urls import path
 from .views import Login, index, Register, FindPwd, returnCode,getFlavor,GuessLike

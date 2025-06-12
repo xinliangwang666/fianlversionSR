@@ -60,7 +60,11 @@
         class="data-v-259fb574" 
         bind:__l="__l"
       ></u-icon>
-      <view class="buy data-v-259fb574">关于</view>
+      <view 
+        data-event-opts="{{[['tap',[['gotoLink',['/subpages/about/about']]]]]}}" 
+        class="buy data-v-259fb574" 
+        bindtap="__e"
+      >关于</view>
     </view>
 
     <view class="info data-v-259fb574">
@@ -71,7 +75,11 @@
         class="data-v-259fb574" 
         bind:__l="__l"
       ></u-icon>
-      <view class="buy data-v-259fb574">联系客服</view>
+      <view 
+        data-event-opts="{{[['tap',[['gotoLink',['/subpages/customer-service/customer-service']]]]]}}" 
+        class="buy data-v-259fb574" 
+        bindtap="__e"
+      >联系客服</view>
     </view>
 
     <view class="info data-v-259fb574 no-shift">

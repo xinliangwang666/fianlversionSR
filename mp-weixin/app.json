@@ -10,7 +10,9 @@
     {
       "root": "subpages",
       "pages": [
-        "personInfo"
+        "personInfo",
+        "about/about",
+        "customer-service/customer-service"
       ]
     }
   ],

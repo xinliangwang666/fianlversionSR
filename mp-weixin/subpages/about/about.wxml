@@ -1,0 +1,16 @@
+<view class="about-container">
+  <view class="logo">
+    <image src="/static/logo1.png" mode="aspectFit"></image>
+  </view>
+  
+  <view class="content">
+    <view class="title">关于我们</view>
+    <view class="description">
+      <text>餐厅点餐小程序是一款为顾客提供便捷点餐服务的应用。我们致力于为您提供最优质的用餐体验。</text>
+    </view>
+    
+    <view class="version">
+      <text>版本号：1.0.0</text>
+    </view>
+  </view>
+</view> 
