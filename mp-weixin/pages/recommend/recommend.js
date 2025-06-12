@@ -216,7 +216,26 @@ var _default = {
   onLoad: function onLoad() {
     this.getGuessDish();
     this.getHotDish();
-    // this.getDish()
+  },
+  
+  onShow: function onShow() {
+    // 每次显示页面时更新数据
+    this.getGuessDish();
+    this.getHotDish();
+  },
+  
+  // 下拉刷新
+  onPullDownRefresh: function onPullDownRefresh() {
+    // 重新获取数据
+    Promise.all([
+      this.getGuessDish(),
+      this.getHotDish()
+    ]).then(() => {
+      // 停止下拉刷新动画
+      uni.stopPullDownRefresh();
+    }).catch(() => {
+      uni.stopPullDownRefresh();
+    });
   },
 
   methods: {
@@ -226,22 +245,34 @@ var _default = {
     // 获取推荐菜品
     getHotDish: function getHotDish() {
       var _this = this;
-      (0, _request.request)({
-        url: '/hotDish'
-      }).then(function (res) {
-        console.log('hotDish=>', res);
-        _this.hotDishList = res.dishList;
+      return new Promise((resolve, reject) => {
+        (0, _request.request)({
+          url: '/hotDish'
+        }).then(function (res) {
+          console.log('hotDish=>', res);
+          _this.hotDishList = res.dishList;
+          resolve();
+        }).catch(function(err) {
+          console.error('获取热门菜品失败:', err);
+          reject(err);
+        });
       });
     },
     // 猜你喜欢
     getGuessDish: function getGuessDish() {
       var _this2 = this;
-      (0, _request.request)({
-        url: '/guessLike'
-      }).then(function (res) {
-        console.log('guessDish=>', res);
-        _this2.guessDishList = res.dishList;
-        _this2.guessTotal = res.total;
+      return new Promise((resolve, reject) => {
+        (0, _request.request)({
+          url: '/guessLike'
+        }).then(function (res) {
+          console.log('guessDish=>', res);
+          _this2.guessDishList = res.dishList;
+          _this2.guessTotal = res.total;
+          resolve();
+        }).catch(function(err) {
+          console.error('获取猜你喜欢失败:', err);
+          reject(err);
+        });
       });
     }
   }

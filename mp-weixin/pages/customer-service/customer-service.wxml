@@ -1,0 +1,30 @@
+<view class="container">  <!-- 顶部欢迎区域 -->
+  <view class="welcome-section">
+    <view class="welcome-icon">
+      <image src="/static/icons/app-logo.png" mode="aspectFit"></image>
+    </view>
+    <view class="welcome-text">
+      <text class="welcome-title">客户服务</text>
+      <text class="welcome-desc">24小时为您提供专业服务</text>
+    </view>
+  </view>
+
+  <!-- 客服电话 -->
+  <view class="section">
+    <view class="section-content">
+      <view class="phone-card" bindtap="makeCall" data-phone="400-123-4567">
+        <view class="phone-icon">
+          <u-icon name="phone-fill" size="32" color="#28A745"></u-icon>
+        </view>
+        <view class="phone-info">
+          <text class="phone-label">客服热线</text>
+          <text class="phone-number">400-123-4567</text>
+          <text class="service-time">服务时间：09:00-22:00</text>
+        </view>
+        <view class="call-button">
+          <text>立即拨打</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

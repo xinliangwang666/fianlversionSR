@@ -203,7 +203,8 @@ var _default = {
               data: {
                 total: item.order_total,
                 flavor_id: 1,
-                dishes: dishList
+                dishes: dishList,
+                is_paid : true
               }
             }).then(function (res) {
               uni.showToast({
