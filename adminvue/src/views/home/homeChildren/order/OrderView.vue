@@ -118,7 +118,7 @@ onMounted(() => {
   hasNewOrder()
   setInterval(() => {
     hasNewOrder()
-  }, 1500)  // 改为1.5秒，使提示更及时
+  }, 1600)  // 改为1.5秒，使提示更及时
 })
 
 // 音频播放

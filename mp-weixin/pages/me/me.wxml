@@ -54,6 +54,21 @@
 
     <view class="info data-v-259fb574">
       <u-icon 
+        vue-id="8e55f700-1-1" 
+        size="30" 
+        name="map-fill" 
+        class="data-v-259fb574" 
+        bind:__l="__l"
+      ></u-icon>
+      <view 
+        data-event-opts="{{[['tap',[['gotoLink',['/subpages/address/address']]]]]}}" 
+        class="buy data-v-259fb574" 
+        bindtap="__e"
+      >收货地址管理</view>
+    </view>
+
+    <view class="info data-v-259fb574">
+      <u-icon 
         vue-id="8e55f700-2" 
         name="info-circle-fill" 
         size="30" 
@@ -64,7 +79,7 @@
         data-event-opts="{{[['tap',[['gotoLink',['/subpages/about/about']]]]]}}" 
         class="buy data-v-259fb574" 
         bindtap="__e"
-      >关于</view>
+      >关于我们</view>
     </view>
 
     <view class="info data-v-259fb574">

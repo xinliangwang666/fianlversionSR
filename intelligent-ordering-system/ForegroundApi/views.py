@@ -67,12 +67,10 @@ class Login(View):
                     'name': name,
                     'password': password,
                     'integral': userInfo.integral,
-                    'avatar_url': userInfo.avatar_url
+                    'avatar_url': userInfo.avatar_url,
+                    'addr': userInfo.addr
                 }
 
-                # userid = userInfo.id
-                # avatar_url = res.first().avatar_url
-                # obj['id'] = userid
                 request.session.save()
                 request.session['info'] = obj
                 # 设置过期时间，设置一周内过期
@@ -81,7 +79,12 @@ class Login(View):
                 session_id = request.session.session_key
                 print(session_id)
                 response = JsonResponse(
-                    {"avatar_url": userInfo.avatar_url, "integral": userInfo.integral, 'sessionid': session_id},
+                    {
+                        "avatar_url": userInfo.avatar_url, 
+                        "integral": userInfo.integral, 
+                        'sessionid': session_id,
+                        'addr': userInfo.addr
+                    },
                     status=200)
                 return response
 
@@ -1276,3 +1279,58 @@ class getFlavor(View):
             flavor_list.append(obj)
         count = flavors.count()
         return JsonResponse({"flavorList": flavor_list, "total": count})
+
+# 地址管理
+class AddressView(View):
+    @method_decorator(check_session_id)
+    def get(self, request):
+        session_id = request.headers.get('Authorization').split(' ')[1]
+        session = Session.objects.get(session_key=session_id)
+        user_data = session.get_decoded()
+        user_id = user_data['info']['id']
+        
+        try:
+            user = User.objects.get(id=user_id)
+            return JsonResponse({
+                'status': 'success',
+                'data': {
+                    'addr': user.addr
+                }
+            })
+        except User.DoesNotExist:
+            return JsonResponse({
+                'status': 'error',
+                'msg': '用户不存在'
+            }, status=404)
+    
+    @method_decorator(check_session_id)
+    def post(self, request):
+        session_id = request.headers.get('Authorization').split(' ')[1]
+        session = Session.objects.get(session_key=session_id)
+        user_data = session.get_decoded()
+        user_id = user_data['info']['id']
+        
+        data = json.loads(request.body)
+        addr = data.get('addr')
+        
+        if not addr:
+            return JsonResponse({
+                'status': 'error',
+                'msg': '地址不能为空'
+            }, status=400)
+            
+        try:
+            user = User.objects.get(id=user_id)
+            user.addr = addr
+            user.save()
+            return JsonResponse({
+                'status': 'success',
+                'data': {
+                    'addr': user.addr
+                }
+            })
+        except User.DoesNotExist:
+            return JsonResponse({
+                'status': 'error',
+                'msg': '用户不存在'
+            }, status=404)

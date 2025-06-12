@@ -1,12 +1,12 @@
 <view class="about-container">
   <view class="logo">
-    <image src="/static/logo1.png" mode="aspectFit"></image>
+    <image src="/static/logo1.png" mode="aspectFit" style="width: 300px; height: 180px;"></image>
   </view>
   
   <view class="content">
     <view class="title">关于我们</view>
     <view class="description">
-      <text>餐厅点餐小程序是一款为顾客提供便捷点餐服务的应用。我们致力于为您提供最优质的用餐体验。</text>
+      <text>餐厅点餐小程序是一款为顾客提供便捷点餐服务的应用。我们致力于为您提供最优质的用餐体验。联系方式：19261097318</text>
     </view>
     
     <view class="version">

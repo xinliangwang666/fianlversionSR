@@ -12,7 +12,8 @@
       "pages": [
         "personInfo",
         "about/about",
-        "customer-service/customer-service"
+        "customer-service/customer-service",
+        "address/address"
       ]
     }
   ],
@@ -52,5 +53,8 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "requiredPrivateInfos": [
+    "chooseAddress"
+  ]
 }

@@ -1,0 +1,31 @@
+<view class="address-container">
+  <!-- 地址信息 -->
+  <view class="address-info" wx:if="{{address}}">
+    <view class="address-item">
+      <view class="address-content" wx:if="{{!isEditing}}">
+        <view class="address-text">{{address}}</view>
+        <view class="address-actions">
+          <button class="edit-btn" bindtap="handleEdit">修改</button>
+        </view>
+      </view>
+      <view class="address-edit" wx:if="{{isEditing}}">
+        <textarea 
+          class="address-input" 
+          value="{{editAddress}}" 
+          placeholder="请输入收货地址" 
+          bindinput="handleInput"
+        ></textarea>
+        <view class="button-group">
+          <button class="cancel-btn" bindtap="handleCancel">取消</button>
+          <button class="save-btn" bindtap="handleSave">保存</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空地址提示 -->
+  <view class="empty-address" wx:if="{{!address}}" bindtap="handleAddress">
+    <image src="/static/empty-address.png" mode="aspectFit"></image>
+    <text>暂无收货地址，点击添加</text>
+  </view>
+</view> 

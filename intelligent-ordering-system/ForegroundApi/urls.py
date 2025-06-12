@@ -1,8 +1,6 @@
-
-
 from django.urls import path
 from .views import Login, index, Register, FindPwd, returnCode,getFlavor,GuessLike
-from .views import getNotice, getDish, getRecommend, OrderView, Type,Recommend,hotDish
+from .views import getNotice, getDish, getRecommend, OrderView, Type,Recommend,hotDish, AddressView
 
 urlpatterns = [
     # 登录
@@ -29,5 +27,7 @@ urlpatterns = [
     # 获取菜品分类，比如炒菜，面食，酒水等
     path('type', Type.as_view()),
     # 获取口味
-    path('flavor',getFlavor.as_view())
+    path('flavor',getFlavor.as_view()),
+    # 地址管理
+    path('address', AddressView.as_view()),
 ]

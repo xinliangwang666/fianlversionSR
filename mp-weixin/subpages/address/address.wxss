@@ -1,0 +1,103 @@
+.address-container {
+  padding: 20rpx;
+  min-height: 100vh;
+  background: #f8f8f8;
+}
+
+.address-info {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.address-item {
+  width: 100%;
+}
+
+.address-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.address-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+}
+
+.address-actions {
+  margin-left: 20rpx;
+}
+
+.edit-btn {
+  font-size: 24rpx;
+  padding: 10rpx 30rpx;
+  background: #f8f8f8;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 30rpx;
+}
+
+.address-edit {
+  width: 100%;
+}
+
+.address-input {
+  width: 100%;
+  height: 160rpx;
+  background: #f8f8f8;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20rpx;
+}
+
+.save-btn, .cancel-btn {
+  font-size: 28rpx;
+  padding: 15rpx 40rpx;
+  border-radius: 30rpx;
+}
+
+.save-btn {
+  background: #07c160;
+  color: #fff;
+}
+
+.cancel-btn {
+  background: #f8f8f8;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.empty-address {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  background: #fff;
+  border-radius: 12rpx;
+  margin-top: 20rpx;
+}
+
+.empty-address image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-address text {
+  font-size: 28rpx;
+  color: #999;
+} 
