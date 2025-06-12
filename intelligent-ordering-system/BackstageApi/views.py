@@ -241,6 +241,7 @@ class UserInfo(View):
 
         data = json.loads(request.body)
         user_id = data.get('user_id')
+        name = data.get('name')
         password = data.get('password')
         gender = data.get('gender')
         integral = data.get('integral')
@@ -257,16 +258,22 @@ class UserInfo(View):
             "email": email,
         }
 
-        # 只有管理员（role=0）可以修改地址
-        if current_role == 0 and addr is not None:
-            obj["addr"] = addr
-        elif current_role != 0 and addr is not None:
-            return JsonResponse({"status": "error", "msg": "只有管理员可以修改用户地址"}, status=403)
+        # 管理员和超级管理员可以修改用户名和地址
+        if current_role in [0, 1]:  # 0是超级管理员，1是管理员
+            if name is not None:
+                obj["name"] = name
+            if addr is not None:
+                obj["addr"] = addr
+        elif addr is not None:
+            return JsonResponse({"status": "error", "msg": "商家不能修改用户地址"}, status=403)
 
         user = User.objects.filter(id=user_id)
         if user.exists():
-            user.update(**obj)
-            return JsonResponse({"status": "success"})
+            try:
+                user.update(**obj)
+                return JsonResponse({"status": "success"})
+            except Exception as e:
+                return JsonResponse({"status": "error", "msg": str(e)}, status=400)
         else:
             return JsonResponse({"status": "error", "msg": "用户不存在"}, status=400)
 

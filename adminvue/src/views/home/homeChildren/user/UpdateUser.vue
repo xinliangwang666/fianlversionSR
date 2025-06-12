@@ -1,7 +1,7 @@
 <template>
   <el-form :model="form" label-width="120px">
     <el-form-item label="用户名">
-      <el-input v-model="form.name" disabled />
+      <el-input v-model="form.name" :disabled="userRole === '商家'" />
     </el-form-item>
     <el-form-item label="密码">
       <el-input v-model="form.password" />
@@ -21,7 +21,7 @@
     <el-form-item label="邮箱">
       <el-input v-model="form.email" />
     </el-form-item>
-    <el-form-item label="收货地址" v-if="userRole === '超级管理员'">
+    <el-form-item label="收货地址" v-if="userRole === '管理员' || userRole === '超级管理员'">
       <el-input v-model="form.addr" type="textarea" :rows="3" placeholder="请输入收货地址" />
     </el-form-item>
     <el-form-item label="收货地址" v-else>
@@ -44,6 +44,7 @@ import { ElNotification } from 'element-plus'
 
 interface UpdateUserData {
   user_id: number;
+  name: string;
   password: string;
   gender: number;
   integral: number;
@@ -100,6 +101,7 @@ const getInfo = (id: number) => {
 const onSubmit = () => {
   const updateData: UpdateUserData = {
     user_id: user_id,
+    name: form.name,
     password: form.password,
     gender: form.gender,
     integral: form.integral,
@@ -107,8 +109,8 @@ const onSubmit = () => {
     email: form.email,
   }
 
-  // 只有超级管理员可以修改地址
-  if (userRole.value === '超级管理员') {
+  // 管理员和超级管理员可以修改地址
+  if (userRole.value === '管理员' || userRole.value === '超级管理员') {
     updateData.addr = form.addr
   }
 
@@ -119,6 +121,13 @@ const onSubmit = () => {
       type: 'success',
     })
     router.push('/home/user/list')
+  }).catch(error => {
+    console.error('更新失败:', error);
+    ElNotification({
+      title: '错误',
+      message: error.response?.data?.msg || '更新失败',
+      type: 'error',
+    })
   })
 }
 
